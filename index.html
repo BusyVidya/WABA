@@ -3,47 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wahengbam Leikai Badminton Association (WABA)</title>
+    <title>WABA - Matrix Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @keyframes matrix {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
         body {
             font-family: 'Courier New', monospace;
+            background-color: black;
+            overflow: hidden;
+        }
+        .matrix-text {
+            position: absolute;
+            top: 0;
+            color: #0f0;
+            font-size: 16px;
+            animation: matrix linear infinite;
         }
         .glow {
-            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+            text-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
         }
-        .matrix-bg {
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 30%, rgba(0, 255, 0, 0.1) 100%);
+        .music-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: black;
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .music-button:hover {
+            background: #0f0;
+            color: black;
         }
     </style>
 </head>
-<body class="matrix-bg text-green-400">
+<body class="text-green-400 relative">
+    <!-- Matrix Animation -->
+    <script>
+        function createMatrixEffect() {
+            for (let i = 0; i < 100; i++) {
+                let matrixChar = document.createElement("div");
+                matrixChar.classList.add("matrix-text");
+                matrixChar.innerText = String.fromCharCode(33 + Math.random() * 94);
+                matrixChar.style.left = Math.random() * 100 + "vw";
+                matrixChar.style.animationDuration = 2 + Math.random() * 3 + "s";
+                document.body.appendChild(matrixChar);
+                setTimeout(() => matrixChar.remove(), 5000);
+            }
+        }
+        setInterval(createMatrixEffect, 300);
+    </script>
+
+    <!-- Audio Player -->
+    <audio id="matrixMusic" loop>
+        <source src="https://raw.githubusercontent.com/BusyVidya/WABA/main/Tararara_Trumpet_Ringtone.mp3" type="audio/mp3">
+
+        Your browser does not support the audio element.
+    </audio>
+    <button class="music-button" onclick="toggleMusic()">▶</button>
+    <script>
+        let music = document.getElementById("matrixMusic");
+        let button = document.querySelector(".music-button");
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                button.innerText = "▶";
+            } else {
+                music.play();
+                button.innerText = "⏸";
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+
     <!-- Header Section -->
-    <header class="bg-black p-6 text-center text-3xl font-bold glow shadow-md border-b border-green-400">
+    <header class="bg-black p-6 text-center text-3xl font-bold glow border-b border-green-400">
         WAHENGBAM LEIKAI BADMINTON ASSOCIATION (WABA)
     </header>
     
     <!-- Hero Section -->
-    <section class="flex flex-col items-center justify-center text-center p-10">
+    <section class="flex flex-col items-center justify-center text-center p-10 relative z-10">
         <h1 class="text-5xl font-bold mb-4 glow">Smash the shuttle if you can</h1>
         <p class="text-lg text-green-300 max-w-2xl">
             To create a thriving badminton ecosystem where local talent gets recognized, trained, and elevated to professional circuits, inspiring future generations of players.
         </p>
         <a href="https://forms.gle/7Ai3BigLUKJrszvy5" target="_blank" class="mt-6 bg-black border border-green-400 px-6 py-2 rounded text-green-400 font-semibold hover:bg-green-400 hover:text-black">Join Now</a>
     </section>
-<br>
-<br>
-<br>
     
     <!-- Features Section -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 p-10">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 relative z-10">
         <div class="bg-black p-6 text-center rounded-lg shadow-lg border border-green-400">
             <h3 class="text-xl font-semibold glow">Skill Upgrade</h3>
             <p class="text-green-300">Train with the best and level up your badminton skills.</p>
         </div>
         <div class="bg-black p-6 text-center rounded-lg shadow-lg border border-green-400">
             <h3 class="text-xl font-semibold glow">Tournaments</h3>
-            <p class="text-green-300">Compete in high-level competitive area and show your way to victory.</p>
+            <p class="text-green-300">Compete in high-level competitive areas and show your way to victory.</p>
         </div>
         <div class="bg-black p-6 text-center rounded-lg shadow-lg border border-green-400">
             <h3 class="text-xl font-semibold glow">Elite Network</h3>
@@ -52,7 +118,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black p-12 text-center text-green-400 border-t border-green-400">
+    <footer class="bg-black p-12 text-center text-green-400 border-t border-green-400 relative z-10">
         &copy; 2025 Wahengbam Leikai Badminton Association. All rights reserved.
     </footer>
 </body>
